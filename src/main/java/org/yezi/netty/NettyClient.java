@@ -21,7 +21,7 @@ public class NettyClient {
                 .channel(NioSocketChannel.class) // 指定IO模型 NioSocketChannel为NIO，OioSocketChannel为BIO
                 .handler(new ChannelInitializer<SocketChannel>() { // 处理逻辑
                     @Override
-                    protected void initChannel(SocketChannel socketChannel) throws Exception {
+                    protected void initChannel(SocketChannel socketChannel) {
                         // 指定连接数据读写逻辑
                         socketChannel.pipeline().addLast(new FirstClientHandler());
                     }

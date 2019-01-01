@@ -12,20 +12,22 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
 
     // channelActive方法会在客户端连接建立成功过后被调用
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
 
         System.out.println(new Date() + ": 客户端写出数据");
 
-        // 1、获取数据
-        ByteBuf buffer = getByteBuf(ctx);
+        for (int i = 0; i < 1000; i++) {
+            // 1、获取数据
+            ByteBuf buffer = getByteBuf(ctx);
+            // 2、写数据
+            ctx.channel().writeAndFlush(buffer);
+        }
 
-        // 2、写数据
-        ctx.channel().writeAndFlush(buffer);
 
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
         ByteBuf byteBuf = (ByteBuf) msg;
 
@@ -37,7 +39,7 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
 
         ByteBuf byteBuf = ctx.alloc().buffer();
 
-        byte[] bytes = "你好， 夜子".getBytes(Charset.forName("utf-8"));
+        byte[] bytes = "你好， 夜子1234567890".getBytes(Charset.forName("utf-8"));
 
         byteBuf.writeBytes(bytes);
 
