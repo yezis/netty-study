@@ -10,19 +10,22 @@ import io.netty.util.concurrent.GenericFutureListener;
 
 public class NettyServer {
     public static void main(String[] args) {
+        // 监听端口，accept新连接的线程组
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
+        // 处理每一条连接的数据读写的线程组
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
-
+        // 服务器引导类
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap
-                .group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new ChannelInitializer<NioSocketChannel>() {
+                .group(bossGroup, workerGroup) // 配置引导类的两大线程组
+                .channel(NioServerSocketChannel.class) // 指定服务器的IO模型， NioServerSocketChannel为NIO，OioServerSocketChannel为BIO
+                .childHandler(new ChannelInitializer<NioSocketChannel>() { // 定义后续每条连接的数据读写，业务处理逻辑
                       protected void initChannel(NioSocketChannel ch) {
+                        ch.pipeline().addLast(new FirstServerHandler());
                       }
                 });
 
-        bind(serverBootstrap, 1000);
+        bind(serverBootstrap, 8000);
     }
 
     // 自动绑定递增端口
