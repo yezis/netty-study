@@ -1,4 +1,4 @@
-package org.yezi.netty;
+package org.yezi.netty.cs;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;

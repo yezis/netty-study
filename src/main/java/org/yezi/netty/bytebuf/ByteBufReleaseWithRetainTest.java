@@ -1,4 +1,4 @@
-package org.yezi.netty;
+package org.yezi.netty.bytebuf;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
