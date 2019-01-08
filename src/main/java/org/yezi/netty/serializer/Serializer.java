@@ -16,7 +16,7 @@ public interface Serializer {
      * 序列化算法
      * @return
      */
-    byte getSerializerAlgorithm();
+    byte getSerializerAlogrithm();
 
     /**
      * java 对象转换二进制
@@ -32,6 +32,6 @@ public interface Serializer {
      * @param <T>
      * @return
      */
-    <T> T deserialize(byte[] bytes, Class<T> clazz);
+    <T> T deserialize(Class<T> clazz, byte[] bytes);
 
 }

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 public class JSONSerializer implements Serializer {
 
     @Override
-    public byte getSerializerAlgorithm() {
+    public byte getSerializerAlogrithm() {
 
         return SerializerAlgorithm.JSON;
     }
@@ -17,7 +17,7 @@ public class JSONSerializer implements Serializer {
     }
 
     @Override
-    public <T> T deserialize(byte[] bytes, Class<T> clazz) {
+    public <T> T deserialize(Class<T> clazz, byte[] bytes) {
 
         return JSON.parseObject(bytes, clazz);
     }
