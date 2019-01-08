@@ -1,4 +1,4 @@
-package org.yezi.netty.protocol.base;
+package org.yezi.netty.protocol.command;
 
 public interface Command {
 

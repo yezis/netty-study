@@ -2,14 +2,14 @@ package org.yezi.netty.protocol.base;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import org.yezi.netty.protocol.LoginRequestPacket;
+import org.yezi.netty.protocol.request.LoginRequestPacket;
 import org.yezi.netty.serializer.JSONSerializer;
 import org.yezi.netty.serializer.Serializer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.yezi.netty.protocol.base.Command.LOGIN_REQUEST;
+import static org.yezi.netty.protocol.command.Command.LOGIN_REQUEST;
 
 public class PacketCodeC {
 

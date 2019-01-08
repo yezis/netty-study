@@ -1,7 +1,7 @@
-package org.yezi.netty.protocol;
+package org.yezi.netty.protocol.request;
 
 import lombok.Data;
-import org.yezi.netty.protocol.base.Command;
+import org.yezi.netty.protocol.command.Command;
 import org.yezi.netty.protocol.base.Packet;
 
 @Data
