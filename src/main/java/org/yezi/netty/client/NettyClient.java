@@ -22,11 +22,11 @@ public class NettyClient {
                 .channel(NioSocketChannel.class)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-
+                    protected void initChannel(SocketChannel ch) {
+                        ch.pipeline().addLast(new FirstClientHandler());
                     }
                 });
-        connect(bootstrap, "127.0.0.1", 8000, MAX_RETRY);
+        connect(bootstrap, "127.0.0.1", 8000,    MAX_RETRY);
     }
 
     private static void connect(Bootstrap bootstrap, String host, int port, int retry){
