@@ -1,16 +1,25 @@
-package org.yezi.netty.packet;
+package org.yezi.netty.protocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import org.yezi.netty.protocol.request.LoginRequestPacket;
+import org.yezi.netty.protocol.response.LoginResponsePacket;
 import org.yezi.netty.serializer.JsonSerializer;
 import org.yezi.netty.serializer.Serializer;
 import org.yezi.netty.serializer.SerializerAlgorithm;
 
-import static org.yezi.netty.packet.PacketCommand.LOGIN_REQUEST;
+import static org.yezi.netty.protocol.PacketCommand.LOGIN_REQUEST;
+import static org.yezi.netty.protocol.PacketCommand.LOGIN_RESPONSE;
 
 public class PacketCodeC {
 
     private static final int MAGIC_NUMBER = 0X123456;
+
+    public static final PacketCodeC INSTANCE = new PacketCodeC();
+
+    private PacketCodeC(){
+
+    }
 
     /**
      * 解码
@@ -47,9 +56,9 @@ public class PacketCodeC {
         return null;
     }
 
-    public ByteBuf encode(Packet packet, byte serializerAlgorithm){
+    public ByteBuf encode(ByteBufAllocator bufAllocator, Packet packet, byte serializerAlgorithm){
 
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
+        ByteBuf byteBuf = bufAllocator.ioBuffer();
 
         Serializer serializer = getSerializer(serializerAlgorithm);
         byte[] bytes = serializer.serialize(packet);
@@ -67,6 +76,9 @@ public class PacketCodeC {
     private Class<? extends Packet> getRequestType(byte command){
         if(command == LOGIN_REQUEST){
             return LoginRequestPacket.class;
+        }
+        else if(command == LOGIN_RESPONSE) {
+            return LoginResponsePacket.class;
         }
 
         return null;

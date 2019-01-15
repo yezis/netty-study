@@ -1,4 +1,4 @@
-package org.yezi.netty.packet;
+package org.yezi.netty.protocol;
 
 import lombok.Data;
 
