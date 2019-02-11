@@ -3,17 +3,18 @@ package org.yezi.netty.protocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import org.yezi.netty.protocol.request.LoginRequestPacket;
+import org.yezi.netty.protocol.request.MessageRequestPacket;
 import org.yezi.netty.protocol.response.LoginResponsePacket;
+import org.yezi.netty.protocol.response.MessageResponsePacket;
 import org.yezi.netty.serializer.JsonSerializer;
 import org.yezi.netty.serializer.Serializer;
 import org.yezi.netty.serializer.SerializerAlgorithm;
 
-import static org.yezi.netty.protocol.PacketCommand.LOGIN_REQUEST;
-import static org.yezi.netty.protocol.PacketCommand.LOGIN_RESPONSE;
+import static org.yezi.netty.protocol.PacketCommand.*;
 
 public class PacketCodeC {
 
-    private static final int MAGIC_NUMBER = 0X123456;
+    public static final int MAGIC_NUMBER = 0X123456;
 
     public static final PacketCodeC INSTANCE = new PacketCodeC();
 
@@ -56,16 +57,14 @@ public class PacketCodeC {
         return null;
     }
 
-    public ByteBuf encode(ByteBufAllocator bufAllocator, Packet packet, byte serializerAlgorithm){
+    public ByteBuf encode(ByteBuf byteBuf, Packet packet){
 
-        ByteBuf byteBuf = bufAllocator.ioBuffer();
-
-        Serializer serializer = getSerializer(serializerAlgorithm);
+        Serializer serializer = getSerializer(SerializerAlgorithm.JSON);
         byte[] bytes = serializer.serialize(packet);
 
         byteBuf.writeInt(MAGIC_NUMBER);
         byteBuf.writeByte(packet.getVersion());
-        byteBuf.writeByte(serializerAlgorithm);
+        byteBuf.writeByte(SerializerAlgorithm.JSON);
         byteBuf.writeByte(packet.getCommand());
         byteBuf.writeInt(bytes.length);
         byteBuf.writeBytes(bytes);
@@ -79,6 +78,12 @@ public class PacketCodeC {
         }
         else if(command == LOGIN_RESPONSE) {
             return LoginResponsePacket.class;
+        }
+        else if(command == MESSAGE_REQUEST){
+            return MessageRequestPacket.class;
+        }
+        else if(command == MESSAGE_RESPONSE){
+            return MessageResponsePacket.class;
         }
 
         return null;

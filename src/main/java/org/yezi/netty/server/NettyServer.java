@@ -6,6 +6,12 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.yezi.netty.protocol.codec.PacketDecoder;
+import org.yezi.netty.protocol.codec.PacketEncoder;
+import org.yezi.netty.protocol.codec.Spliter;
+import org.yezi.netty.server.handle.AuthHandler;
+import org.yezi.netty.server.handle.LoginRequestHandler;
+import org.yezi.netty.server.handle.MessageRequestHandler;
 
 public class NettyServer {
     public static void main(String[] args) {
@@ -19,7 +25,14 @@ public class NettyServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new ServerHandler());
+                        // inBound 处理读数据的逻辑链
+                        ch.pipeline().addLast(new Spliter());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginRequestHandler());
+
+                        ch.pipeline().addLast(new AuthHandler());
+                        ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
 
