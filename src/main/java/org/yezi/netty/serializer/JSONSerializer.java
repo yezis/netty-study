@@ -2,6 +2,9 @@ package org.yezi.netty.serializer;
 
 import com.alibaba.fastjson.JSON;
 
+/**
+ * json 序列化
+ */
 public class JSONSerializer implements Serializer {
 
     @Override
