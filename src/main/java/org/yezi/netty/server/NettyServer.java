@@ -1,4 +1,4 @@
-package org.yezi.netty.cs;
+package org.yezi.netty.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -19,7 +19,8 @@ public class NettyServer {
                 .channel(NioServerSocketChannel.class) // 指定服务器的IO模型， NioServerSocketChannel为NIO，OioServerSocketChannel为BIO
                 .childHandler(new ChannelInitializer<NioSocketChannel>() { // 定义后续每条连接的数据读写，业务处理逻辑
                       protected void initChannel(NioSocketChannel ch) {
-                        ch.pipeline().addLast(new FirstServerHandler());
+                        ch.pipeline().addLast(new ServerChannelHandlerStatus());
+                        ch.pipeline().addLast(new ServerChannelHandlerStatus1());
                       }
                 });
 

@@ -1,4 +1,4 @@
-package org.yezi.netty.cs;
+package org.yezi.netty.server;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,4 +1,4 @@
-package org.yezi.netty.cs;
+package org.yezi.netty.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -23,7 +23,7 @@ public class NettyClient {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) {
                         // 指定连接数据读写逻辑
-                        socketChannel.pipeline().addLast(new FirstClientHandler());
+//                        socketChannel.pipeline().addLast(new ChannelHandlerStatus());
                     }
                 });
         // 建立连接
